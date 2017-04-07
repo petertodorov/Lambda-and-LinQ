@@ -1,0 +1,27 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+class FoldAndSum
+{
+    static void Main()
+    {
+        int[] input = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+        int k = input.Length / 4;
+        int[] left = input.Take(k).Reverse().ToArray();
+        int[] central = input.Skip(k).Take(2 * k).ToArray();
+        Array.Reverse(input);
+        int[] rigth = input.Take(k).ToArray();
+        int[] firstRow = left.Concat(rigth).ToArray();
+        int[] secondRow = central;
+        List<int> sum = new List<int>();
+        for (int i = 0; i < firstRow.Length; i++)
+        {
+            sum.Add(firstRow[i] + secondRow[i]);
+        }
+        Console.WriteLine(String.Join(" ", sum));
+    }
+}
+
