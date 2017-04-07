@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Globalization;
+class RegisterUsers
+{
+    static void Main(string[] args)
+    {
+        Dictionary<string, DateTime> usersList = new Dictionary<string, DateTime>();
+        string input = Console.ReadLine();
+        while (input != "end")
+        {
+            string userName = string.Empty;
+            string[] dataInput = input.Split(new[] { '-', '>', ' ' }, StringSplitOptions.RemoveEmptyEntries).ToArray();
+            userName = dataInput[0];
+            usersList[userName] = DateTime.ParseExact(dataInput[1], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            input = Console.ReadLine();
+        }
+        var result = usersList
+            .Reverse()
+            .OrderBy(u => u.Value)
+            .Take(5)
+            .OrderByDescending(u => u.Value);
+        foreach (var item in result)
+        {
+            Console.WriteLine(item.Key);
+        }
+    }
+}
