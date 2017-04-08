@@ -1,0 +1,40 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Globalization;
+class DefaultValues
+{
+    static void Main(string[] args)
+    {
+        Dictionary<string, string> pairs = new Dictionary<string, string>();
+        string input = Console.ReadLine();
+        string change = string.Empty;
+        while (input != "end")
+        {
+            string[] dataInput = input.Split(new[] { '-', '>', ' ' }, StringSplitOptions.RemoveEmptyEntries).ToArray();
+            string keyInput = dataInput[0];
+            string valueInput = dataInput[1];
+            pairs[keyInput] = valueInput;
+            input = Console.ReadLine();
+        }
+        string defaultValue = Console.ReadLine();
+        Console.WriteLine();
+        foreach (var kvp in pairs.OrderByDescending(kvp => kvp.Value.Length).Distinct())
+        {
+            if (kvp.Value != "null")
+            {
+                Console.WriteLine($"{kvp.Key} <-> {kvp.Value}");
+            }
+        }
+        foreach (var kvp in pairs)
+        {
+            if (kvp.Value == "null")
+            {
+                change = kvp.Value.Remove(0, kvp.Value.Length).Insert(0, defaultValue);
+                Console.WriteLine($"{kvp.Key} <-> {change}");
+            }
+        }
+    }
+}
+
